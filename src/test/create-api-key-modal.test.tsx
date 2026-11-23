@@ -378,8 +378,8 @@ describe('CreateApiKeyModal — confirm dialog', () => {
     expect(onMinted).toHaveBeenCalledOnce()
     const keyId = onMinted.mock.calls[0][0]
     const fullKey = onMinted.mock.calls[0][1]
-    expect(keyId).toMatch(/^key_/)
-    expect(fullKey).toMatch(/^vtsr_live_/)
+    expect(keyId).toMatch(/^key_[a-z0-9]{6}$/)
+    expect(fullKey).toMatch(/^vtsr_live_[0-9a-f]{20}_[0-9a-f]{4}$/)
   })
 })
 

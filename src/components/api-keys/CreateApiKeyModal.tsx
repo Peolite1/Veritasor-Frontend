@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ConfirmDialog from '../ConfirmDialog'
 import { useToast } from '../ToastContext'
+import { randomBase36, randomHex } from '../../utils/secureRandom'
 
 // ─── Scope definitions ─────────────────────────────────────────────────
 
@@ -195,12 +196,12 @@ export default function CreateApiKeyModal({
     setConfirmOpen(true)
   }
 
-  const keyId = useMemo(() => `key_${Math.random().toString(36).slice(2, 8)}`, [])
+  const keyId = useMemo(() => `key_${randomBase36(6)}`, [])
 
   function mint() {
     // Demo-only: generate a fake secret.
     // Real implementation would come from backend and only reveal it once.
-    const fullKey = `vtsr_live_${Math.random().toString(16).slice(2, 14)}${Math.random().toString(16).slice(2, 10)}_${Math.random().toString(16).slice(2, 6)}`
+    const fullKey = `vtsr_live_${randomHex(6)}${randomHex(4)}_${randomHex(2)}`
     setConfirmOpen(false)
     onMinted(keyId, fullKey)
   }
