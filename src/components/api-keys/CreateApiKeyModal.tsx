@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ConfirmDialog from '../ConfirmDialog'
 import { useToast } from '../ToastContext'
+import {
+  SCOPE_GROUPS,
+  ALL_SCOPE_IDS,
+  type ScopeId,
+  getScopeLabels,
+  groupTriState,
+} from './scopeDefinitions'
 import { randomBase36, randomHex } from '../../utils/secureRandom'
 
 // ─── Scope definitions ─────────────────────────────────────────────────
@@ -103,8 +110,7 @@ export default function CreateApiKeyModal({
   const totalScopeCount = ALL_SCOPE_IDS.length
 
   const chosenLabels = useMemo(() => {
-    const flat = SCOPE_GROUPS.flatMap((g) => g.scopes)
-    return selected.map((id) => flat.find((s) => s.id === id)?.label ?? id).filter(Boolean)
+    return getScopeLabels(selected)
   }, [selected])
 
   /** Groups filtered by search query. A group is shown if its label or any of its scope labels/descriptions match. */
